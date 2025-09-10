@@ -80,12 +80,12 @@ int main()
     // glGenBuffers(1, &EBO);
 
 
-    Shader Vertex (Shader::ShaderType::VERTEX, "VertexShader.vs");
-    Shader Fragment (Shader::ShaderType::FRAGMENT, "FragmentShader.fs");
-    ShaderProgram Program(Vertex, Fragment);
+    Shader VertexShader(Shader::ShaderType::VERTEX, "VertexShader.vs");
+    Shader FragmentShader (Shader::ShaderType::FRAGMENT, "FragmentShader.fs");
+    ShaderProgram Program(VertexShader, FragmentShader);
 
-    Vertex.~Shader();
-    Fragment.~Shader();
+    VertexShader.~Shader();
+    FragmentShader.~Shader();
 
 
 
@@ -122,10 +122,11 @@ int main()
         // glUseProgram(shaderProgram);
         Program.Use();
 
-        /*float timeValue = glfwGetTime();
-        float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-        int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);*/
+        float timeValue = glfwGetTime();
+        float greenValue = sin(timeValue) / 2.0f;
+        // int vertexColorLocation = glGetUniformLocation(Fragment.ID, "Color");
+        // glUniform1f(vertexColorLocation, greenValue);
+        VertexShader.setFloat(Program.ID, "Offset", greenValue);
 
 
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // For wireframe

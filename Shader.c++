@@ -66,17 +66,17 @@ Shader::~Shader()
 	glDeleteShader(m_ShaderID);
 }
 
-void Shader::setBool(const std::string& name, bool value) const
+void Shader::setBool(const unsigned int programID, std::string_view name, bool value) const
 {
-	glUniform1i(glGetUniformLocation(m_ShaderID, name.c_str()), (int)value);
+	glUniform1i(glGetUniformLocation(programID, name.data()), (int)value);
 }
 
-void Shader::setInt(const std::string& name, int value) const
+void Shader::setInt(const unsigned int programID, std::string_view name, int value) const
 {
-	glUniform1i(glGetUniformLocation(m_ShaderID, name.c_str()), value);
+	glUniform1i(glGetUniformLocation(programID, name.data()), value);
 }
 
-void Shader::setFloat(std::string_view name, float value) const
+void Shader::setFloat(const unsigned int programID, std::string_view name, float value) const
 {
-	glUniform1f(glGetUniformLocation(m_ShaderID, name.data()), value);
+	glUniform1f(glGetUniformLocation(programID, name.data()), value);
 }

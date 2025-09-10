@@ -7,6 +7,8 @@ class ShaderProgram
 private:
 	unsigned int m_ShaderProgramID;
 public:
+	const unsigned int const& ID;
+
 	ShaderProgram();
 	ShaderProgram(Shader&, Shader&);
 	~ShaderProgram();

@@ -1,11 +1,11 @@
 #include "ShaderProgram.h++"
 
 ShaderProgram::ShaderProgram()
-	: m_ShaderProgramID{ glCreateProgram() }
+	: m_ShaderProgramID{ glCreateProgram() }, ID{m_ShaderProgramID}
 {}
 
 ShaderProgram::ShaderProgram(Shader& VertexShader, Shader& FragmenShader)
-	: m_ShaderProgramID{ glCreateProgram() }
+	: m_ShaderProgramID{ glCreateProgram() }, ID{ m_ShaderProgramID }
 {
 	Create(VertexShader, FragmenShader);
 }

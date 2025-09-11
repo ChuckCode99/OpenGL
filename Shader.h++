@@ -11,8 +11,8 @@
 class Shader
 {
 public:
-	static enum class ShaderType { VERTEX, FRAGMENT };
-	const unsigned int const & ID;
+	enum class ShaderType { VERTEX, FRAGMENT };
+	const unsigned int & ID;
 
 private:
 	ShaderType m_ShaderType;

@@ -7,7 +7,7 @@ class ShaderProgram
 private:
 	unsigned int m_ShaderProgramID;
 public:
-	const unsigned int const& ID;
+	const unsigned int & ID;
 
 	ShaderProgram();
 	ShaderProgram(Shader&, Shader&);

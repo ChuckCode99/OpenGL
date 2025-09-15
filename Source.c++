@@ -2,6 +2,9 @@
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -138,7 +141,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;
-    unsigned char* data1 = stbi_load("Textures/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data1 = stbi_load("Textures/wall.jpg", &width, &height, &nrChannels, 0);
     if (data1)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data1);
@@ -172,14 +175,15 @@ int main()
     }
     stbi_image_free(data2);
 
-    
-
-
 
     Program.Use();
     FragmentShader.setFloat(Program.ID, "texture1", 0);
     // FragmentShader.setFloat(Program.ID, "texture2", 1);
     glUniform1i(glGetUniformLocation(Program.ID, "texture2"), 1);
+    
+
+
+    
 
 
 
@@ -194,6 +198,11 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
 
+        glm::mat4 transform = glm::mat4(1.0f);
+        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+        transform = glm::scale(transform, glm::vec3(0.5f, 0.5f, 0.5f));
+
 
         // glUseProgram(shaderProgram);
         Program.Use();
@@ -202,6 +211,8 @@ int main()
         // glUniform1f(vertexColorLocation, greenValue);
         VertexShader.setFloat(Program.ID, "Offset", greenValue);
         FragmentShader.setFloat(Program.ID, "T_Percent", mixValue);
+        unsigned int transformLoc = glGetUniformLocation(Program.ID, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
         
 

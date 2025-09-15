@@ -9,10 +9,11 @@ out vec2 TexCoord;
 out float Offset_out;
 
 uniform float Offset;
+uniform mat4 transform;
 
 void main()
 {
-   gl_Position = vec4(aPos.x + Offset, aPos.y - Offset, aPos.z, 1.0);
+   gl_Position = transform * vec4(aPos, 1.0);
    ourColor = gl_Position.xyz;
    TexCoord = aTexCoord;
    Offset_out = Offset;

@@ -157,10 +157,10 @@
     <ClCompile Include="Source.c++" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource.h++" />
     <ClInclude Include="Shader.h++" />
     <ClInclude Include="ShaderProgram.h++" />
-    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="stb_image.h++" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpenGL.rc" />

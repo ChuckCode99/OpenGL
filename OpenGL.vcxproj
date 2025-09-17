@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="glad.c" />
+    <ClCompile Include="glad.c++" />
     <ClCompile Include="Shader.c++" />
     <ClCompile Include="ShaderProgram.c++" />
     <ClCompile Include="Source.c++" />

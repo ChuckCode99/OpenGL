@@ -18,7 +18,7 @@
     <ClCompile Include="Source.c++">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="glad.c">
+    <ClCompile Include="glad.c++">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shader.c++">

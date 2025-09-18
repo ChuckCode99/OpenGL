@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "glad/glad.h"
+#include "glm/glm.hpp"
 
 class Shader
 {
@@ -26,4 +27,5 @@ public:
 	void setBool(const unsigned int, std::string_view, bool) const;
 	void setInt(const unsigned int, std::string_view, int) const;
 	void setFloat(const unsigned int, std::string_view, float) const;
+	void setMat4(const unsigned int, std::string_view, const glm::mat4&) const;
 };

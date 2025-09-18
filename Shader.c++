@@ -80,3 +80,8 @@ void Shader::setFloat(const unsigned int programID, std::string_view name, float
 {
 	glUniform1f(glGetUniformLocation(programID, name.data()), value);
 }
+
+void Shader::setMat4(const unsigned int programID, std::string_view name, const glm::mat4& value) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(programID, name.data()), 1, GL_FALSE, &value[0][0]);
+}

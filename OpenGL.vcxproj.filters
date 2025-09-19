@@ -57,5 +57,6 @@
     <None Include="VertexShader.vs" />
     <None Include="FragmentShader.fs" />
     <None Include="ClassDiagram.cd" />
+    <None Include="LightFragmentShader.fs" />
   </ItemGroup>
 </Project>

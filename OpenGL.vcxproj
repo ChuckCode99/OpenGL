@@ -170,6 +170,7 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="FragmentShader.fs" />
+    <None Include="LightFragmentShader.fs" />
     <None Include="VertexShader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

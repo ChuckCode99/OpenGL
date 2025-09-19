@@ -27,6 +27,8 @@ float mixValue  { 0.2f };
 float lastX { WINDOW_DEFAULT_WIDTH / 2.0f };
 float lastY { WINDOW_DEFAULT_HEIGHT / 2.0f };
 
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
 Camera MainCamera(glm::vec3(0.0f, 0.0f, 6.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 int main()
@@ -54,10 +56,16 @@ int main()
     }
 
     glViewport(0, 0, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT);
+
+
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
+
+
+
+    extern float vertices[180];
 
     unsigned int indices[] = 
     {  
@@ -66,7 +74,6 @@ int main()
         1, 2, 3    // second triangle
     };
 
-    extern float vertices[180];
 
 
     unsigned int VBO;
@@ -98,12 +105,35 @@ int main()
 
 
 
+
+    unsigned int LightVAO;
+    glGenVertexArrays(1, &LightVAO);
+    glBindVertexArray(LightVAO);
+    // we only need to bind to the VBO, the container's VBO's data already contains the data.
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    // set the vertex attribute 
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+
+
+
     Shader VertexShader(Shader::ShaderType::VERTEX, "VertexShader.vs");
     Shader FragmentShader (Shader::ShaderType::FRAGMENT, "FragmentShader.fs");
     ShaderProgram Program(VertexShader, FragmentShader);
 
     VertexShader.~Shader();
     FragmentShader.~Shader();
+
+
+
+
+    Shader LightVertexShader(Shader::ShaderType::VERTEX, "VertexShader.vs");
+    Shader LightFragmentShader(Shader::ShaderType::FRAGMENT, "LightFragmentShader.fs");
+    ShaderProgram LightProgram(LightVertexShader, LightFragmentShader);
+
+    LightVertexShader.~Shader();
+    LightFragmentShader.~Shader();
 
 
 
@@ -177,6 +207,12 @@ int main()
     };
 
     
+
+    LightProgram.Use();
+    LightVertexShader.serVec3(LightProgram.ID, "objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+    LightVertexShader.serVec3(LightProgram.ID, "lightColor",  glm::vec3(1.0f, 1.0f, 1.00f));
+
+
     
 
     while (!glfwWindowShouldClose(window))
@@ -230,6 +266,20 @@ int main()
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
         // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, lightPos);
+        model = glm::scale(model, glm::vec3(0.2f));
+
+        LightProgram.Use();
+        LightVertexShader.setMat4(LightProgram.ID, "view", view);
+        LightVertexShader.setMat4(LightProgram.ID, "projection", projection);
+        LightVertexShader.setMat4(LightProgram.ID, "model", model);
+
+        glBindVertexArray(LightVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 

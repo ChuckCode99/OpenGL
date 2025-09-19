@@ -27,5 +27,6 @@ public:
 	void setBool(const unsigned int, std::string_view, bool) const;
 	void setInt(const unsigned int, std::string_view, int) const;
 	void setFloat(const unsigned int, std::string_view, float) const;
+	void serVec3(const unsigned int, std::string_view, const glm::vec3&) const;
 	void setMat4(const unsigned int, std::string_view, const glm::mat4&) const;
 };

@@ -81,7 +81,7 @@ void Shader::setFloat(const unsigned int programID, std::string_view name, float
 	glUniform1f(glGetUniformLocation(programID, name.data()), value);
 }
 
-void Shader::serVec3(const unsigned int programID, std::string_view name, const glm::vec3& value) const
+void Shader::setVec3(const unsigned int programID, std::string_view name, const glm::vec3& value) const
 {
 	glUniform3fv(glGetUniformLocation(ID, name.data()), 1, &value[0]);
 }

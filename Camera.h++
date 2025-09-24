@@ -17,7 +17,6 @@ private:
 	const float SENSITIVITY;//  0.1f;
 
 
-	glm::vec3 m_Position;
 	glm::vec3 m_Front;
 	glm::vec3 m_WorldUp;
 	glm::vec3 m_Right;
@@ -31,6 +30,7 @@ private:
 
 public:
 	float m_Zoom;
+	glm::vec3 m_Position;
 	enum class Direction { FORWARD, BACKWARD, LEFT,	RIGHT };
 
 	Camera(glm::vec3, glm::vec3);

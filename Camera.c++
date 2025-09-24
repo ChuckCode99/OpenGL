@@ -4,7 +4,6 @@ Camera::Camera(glm::vec3 Position = glm::vec3(0.0f, 0.0f,  3.0f), glm::vec3 Worl
 	: YAW(-90.0f), PITCH(0.0f), ZOOM(45.0f), SPEED(2.5f), SENSITIVITY(0.1f),
 	  m_DeltaTime(0.0f), m_LastFrame(0.0f), m_Yaw(YAW), m_Pitch(PITCH), m_Zoom(ZOOM),
 	  m_Position(Position), m_WorldUp(WorldUp), m_Front(glm::vec3(0.0f, 0.0f, -1.0f))
-	  
 {
 	updateCameraVectors();
 }

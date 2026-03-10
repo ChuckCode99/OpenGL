@@ -66,6 +66,7 @@ int main()
 
 
     extern float vertices[216];
+    extern float teextures[72];
 
     unsigned int indices[] = 
     {  
@@ -235,18 +236,45 @@ int main()
 
 
         CubeProgram.Use();
-        glm::vec3 CubeColor { glm::vec3(1.0f, 0.5f, 0.3f) };
+        glm::vec3 CubeColor { glm::vec3(1.0f, 0.9f, 0.1f) };
         glm::vec3 LightColor { glm::vec3(1.0f, 1.0f, 1.0f) };
-        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "objectColor"), 1, &CubeColor[0]);
+        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "CubeColor"), 1, glm::value_ptr(CubeColor)); // 
         glUniform3fv(glGetUniformLocation(CubeProgram.ID, "lightColor"), 1, &LightColor[0]);
         glUniform3fv(glGetUniformLocation(CubeProgram.ID, "lightPos"), 1, &lightPos[0]);
         glUniform3fv(glGetUniformLocation(CubeProgram.ID, "viewPos"), 1, &MainCamera.m_Position[0]);
-        // FragmentShader.setVec3(CubeProgram.ID, "objectColor", glm::vec3(1.0f, 0.5f, 0.3f));
+        // FragmentShader.setVec3(CubeProgram.ID, "objectColor", CubeColor); // glm::vec3(0.2f, 0.8f, 1.0f)
         // FragmentShader.setVec3(CubeProgram.ID, "lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
         // FragmentShader.setVec3(CubeProgram.ID, "lightPos", lightPos);
         // FragmentShader.setFloat(Program.ID, "T_Percent", mixValue);
+        glm::vec3 ambient   { (1.0f, 0.5f, 0.31f) };
+        glm::vec3 diffuse   { (1.0f, 0.5f, 0.31f) };
+        glm::vec3 specular  { (0.5f, 0.5f, 0.5f) };
+        float shininess     { 32.0f };
+        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "material.ambient"), 1, glm::value_ptr(ambient));
+        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "material.diffuse"), 1, glm::value_ptr(diffuse));
+        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "material.specular"), 1, glm::value_ptr(specular));
+        FragmentShader.setFloat(CubeProgram.ID, "material.shininess", shininess);
 
 
+        // LightColor.x = static_cast<float>(sin(glfwGetTime() * 2.0f));
+        // LightColor.y = static_cast<float>(sin(glfwGetTime() * 0.7f));
+        // LightColor.z = static_cast<float>(sin(glfwGetTime() * 1.3f));
+        glm::vec3 diffuseColor = LightColor * glm::vec3(0.5f);
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+        glm::vec3 light_ambient{ (1.0f, 0.5f, 0.31f) };
+        glm::vec3 light_diffuse{ (1.0f, 0.5f, 0.31f) };
+        glm::vec3 light_specular{ (1.0f, 1.0f, 1.0f) };
+
+        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "light.position"), 1, glm::value_ptr(lightPos));
+        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "light.ambient"), 1, glm::value_ptr(ambientColor));
+        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "light.diffuse"), 1, glm::value_ptr(diffuseColor));
+        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "light.specular"), 1, glm::value_ptr(light_specular));
+        LightProgram.Use();
+        glUniform3fv(glGetUniformLocation(LightProgram.ID, "LightColor"), 1, glm::value_ptr(LightColor));
+        // LightFragmentShader.setVec3(LightProgram.ID, "LightColor", LightColor);
+        
+
+        CubeProgram.Use();
         glm::mat4 model         = glm::mat4(1.0f);
         glm::mat4 view          = glm::mat4(1.0f);
         glm::mat4 projection    = glm::mat4(1.0f);
@@ -265,6 +293,12 @@ int main()
         // glBindTexture(GL_TEXTURE_2D, texture2);
 
         glBindVertexArray(VAO);
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        VertexShader.setMat4(CubeProgram.ID, "model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+        /*
         for (unsigned int i = 0; i < 10; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
@@ -276,6 +310,7 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+        */
 
         // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -289,6 +324,9 @@ int main()
         LightVertexShader.setMat4(LightProgram.ID, "view", view);
         LightVertexShader.setMat4(LightProgram.ID, "projection", projection);
         LightVertexShader.setMat4(LightProgram.ID, "model", model);
+
+        
+        
 
         glBindVertexArray(LightVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -362,7 +400,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 float vertices[] = 
 {
-    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
      0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
      0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
      0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -403,6 +441,51 @@ float vertices[] =
      0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
     -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
     -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+};
+
+float textures[] =
+{
+    0.0f, 0.0f,
+    1.0f, 0.0f,
+    1.0f, 1.0f,
+    1.0f, 1.0f,
+    0.0f, 1.0f,
+    0.0f, 0.0f,
+
+    0.0f, 0.0f,
+    1.0f, 0.0f,
+    1.0f, 1.0f,
+    1.0f, 1.0f,
+    0.0f, 1.0f,
+    0.0f, 0.0f,
+
+    1.0f, 0.0f,
+    1.0f, 1.0f,
+    0.0f, 1.0f,
+    0.0f, 1.0f,
+    0.0f, 0.0f,
+    1.0f, 0.0f,
+
+    1.0f, 0.0f,
+    1.0f, 1.0f,
+    0.0f, 1.0f,
+    0.0f, 1.0f,
+    0.0f, 0.0f,
+    1.0f, 0.0f,
+
+    0.0f, 1.0f,
+    1.0f, 1.0f,
+    1.0f, 0.0f,
+    1.0f, 0.0f,
+    0.0f, 0.0f,
+    0.0f, 1.0f,
+
+    0.0f, 1.0f,
+    1.0f, 1.0f,
+    1.0f, 0.0f,
+    1.0f, 0.0f,
+    0.0f, 0.0f,
+    0.0f, 1.0f
 };
 
 //float vertices[] = 

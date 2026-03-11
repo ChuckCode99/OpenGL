@@ -26,9 +26,13 @@ uniform vec3 CubeColor;
 uniform vec3 viewPos;
 uniform Material material;
 uniform Light light;
+uniform float X;
+uniform float Y;
+uniform float Z;
 
 void main()
 {
+    vec3 CubeColorTest = vec3(X, Y, Z);
     // ambient
     vec3 ambient = light.ambient * material.ambient;
   

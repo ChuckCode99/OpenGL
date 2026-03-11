@@ -83,7 +83,7 @@ void Shader::setFloat(const unsigned int programID, std::string_view name, float
 
 void Shader::setVec3(const unsigned int programID, std::string_view name, const glm::vec3& value) const
 {
-	glUniform3fv(glGetUniformLocation(ID, name.data()), 1, glm::value_ptr(value));
+	glUniform3fv(glGetUniformLocation(programID, name.data()), 1, glm::value_ptr(value));
 }
 
 void Shader::setMat4(const unsigned int programID, std::string_view name, const glm::mat4& value) const

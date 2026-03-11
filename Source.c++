@@ -238,21 +238,18 @@ int main()
         CubeProgram.Use();
         glm::vec3 CubeColor { glm::vec3(1.0f, 0.9f, 0.1f) };
         glm::vec3 LightColor { glm::vec3(1.0f, 1.0f, 1.0f) };
-        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "CubeColor"), 1, glm::value_ptr(CubeColor)); // 
-        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "lightColor"), 1, &LightColor[0]);
-        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "lightPos"), 1, &lightPos[0]);
-        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "viewPos"), 1, &MainCamera.m_Position[0]);
-        // FragmentShader.setVec3(CubeProgram.ID, "objectColor", CubeColor); // glm::vec3(0.2f, 0.8f, 1.0f)
-        // FragmentShader.setVec3(CubeProgram.ID, "lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-        // FragmentShader.setVec3(CubeProgram.ID, "lightPos", lightPos);
+        FragmentShader.setVec3(CubeProgram.ID, "CubeColor", CubeColor);
+        FragmentShader.setVec3(CubeProgram.ID, "lightColor", LightColor);
+        FragmentShader.setVec3(CubeProgram.ID, "lightPos", lightPos);
+		FragmentShader.setVec3(CubeProgram.ID, "viewPos", MainCamera.m_Position);
         // FragmentShader.setFloat(Program.ID, "T_Percent", mixValue);
         glm::vec3 ambient   { (1.0f, 0.5f, 0.31f) };
         glm::vec3 diffuse   { (1.0f, 0.5f, 0.31f) };
         glm::vec3 specular  { (0.5f, 0.5f, 0.5f) };
         float shininess     { 32.0f };
-        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "material.ambient"), 1, glm::value_ptr(ambient));
-        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "material.diffuse"), 1, glm::value_ptr(diffuse));
-        glUniform3fv(glGetUniformLocation(CubeProgram.ID, "material.specular"), 1, glm::value_ptr(specular));
+        FragmentShader.setVec3 (CubeProgram.ID, "material.ambient", ambient);
+        FragmentShader.setVec3 (CubeProgram.ID, "material.diffuse", diffuse);
+        FragmentShader.setVec3 (CubeProgram.ID, "material.specular", specular);
         FragmentShader.setFloat(CubeProgram.ID, "material.shininess", shininess);
 
 

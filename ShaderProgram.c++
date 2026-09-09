@@ -11,8 +11,6 @@ ShaderProgram::ShaderProgram(std::string_view VertexShaderFile, std::string_view
 
 ShaderProgram::~ShaderProgram()
 {
-	VertexShaderObject.~Shader();
-	FragmentShaderObject.~Shader();
 	glDeleteProgram(m_ShaderProgramID);
 }
 

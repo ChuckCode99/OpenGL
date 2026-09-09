@@ -99,8 +99,8 @@ int main()
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(6 * sizeof(float)));
+    // glEnableVertexAttribArray(2);
 
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -161,12 +161,12 @@ int main()
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data1);
         glGenerateMipmap(GL_TEXTURE_2D);
+        stbi_image_free(data1);
     }
     else
     {
         std::cout << "Failed to load texture" << std::endl;
     }
-    stbi_image_free(data1);
 
 
     glGenTextures(1, &texture2);
@@ -181,14 +181,14 @@ int main()
     unsigned char* data2 = stbi_load("Textures/awesomeface.png", &width, &height, &nrChannels, 0);
     if (data2)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
         glGenerateMipmap(GL_TEXTURE_2D);
+        stbi_image_free(data2);
     }
     else
     {
         std::cout << "Failed to load texture" << std::endl;
     }
-    stbi_image_free(data2);
 
 
     // Program.Use();
@@ -338,6 +338,7 @@ int main()
     }
 
     glDeleteVertexArrays(1, &VAO);
+    glDeleteVertexArrays(1, &LightVAO);
     glDeleteBuffers(1, &VBO);
     // glDeleteBuffers(1, &EBO);
 

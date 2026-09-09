@@ -1,10 +1,6 @@
 #include "ShaderProgram.h++"
 #include <string_view>
 
-// ShaderProgram::ShaderProgram()
-// 	: m_ShaderProgramID{ glCreateProgram() }, ID{m_ShaderProgramID}
-// {}
-
 ShaderProgram::ShaderProgram(std::string_view VertexShaderFile, std::string_view FragmentShaderFile)
 	: m_ShaderProgramID{ glCreateProgram() }, ID{m_ShaderProgramID},
 	  VertexShaderObject(Shader::ShaderType::VERTEX, VertexShaderFile),
@@ -12,12 +8,6 @@ ShaderProgram::ShaderProgram(std::string_view VertexShaderFile, std::string_view
 {
 	Create();
 }
-
-// ShaderProgram::ShaderProgram(Shader& VertexShader, Shader& FragmentShader)
-// 	: m_ShaderProgramID{ glCreateProgram() }, ID{ m_ShaderProgramID }
-// {
-// 	Create(VertexShader, FragmentShader);
-// }
 
 ShaderProgram::~ShaderProgram()
 {

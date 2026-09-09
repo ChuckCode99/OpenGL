@@ -10,7 +10,6 @@
 #include "stb_image.h++"
 
 
-#include "Shader.h++"
 #include "ShaderProgram.h++"
 #include "Camera.h++"
 
@@ -122,22 +121,26 @@ int main()
 
 
 
-    Shader VertexShader(Shader::ShaderType::VERTEX, "VertexShader.vs");
-    Shader FragmentShader (Shader::ShaderType::FRAGMENT, "FragmentShader.fs");
-    ShaderProgram CubeProgram(VertexShader, FragmentShader);
+    // Shader VertexShader(Shader::ShaderType::VERTEX, "VertexShader.vs");
+    // Shader FragmentShader (Shader::ShaderType::FRAGMENT, "FragmentShader.fs");
+    // ShaderProgram CubeProgram(VertexShader, FragmentShader);
 
-    VertexShader.~Shader();
-    FragmentShader.~Shader();
+    // VertexShader.~Shader();
+    // FragmentShader.~Shader();
+
+    ShaderProgram CubeProgram("VertexShader.vs", "FragmentShader.fs");
 
 
 
 
-    Shader LightVertexShader(Shader::ShaderType::VERTEX, "LightVertexShader.vs");
-    Shader LightFragmentShader(Shader::ShaderType::FRAGMENT, "LightFragmentShader.fs");
-    ShaderProgram LightProgram(LightVertexShader, LightFragmentShader);
+    // Shader LightVertexShader(Shader::ShaderType::VERTEX, "LightVertexShader.vs");
+    // Shader LightFragmentShader(Shader::ShaderType::FRAGMENT, "LightFragmentShader.fs");
+    // ShaderProgram LightProgram(LightVertexShader, LightFragmentShader);
 
-    LightVertexShader.~Shader();
-    LightFragmentShader.~Shader();
+    // LightVertexShader.~Shader();
+    // LightFragmentShader.~Shader();
+
+    ShaderProgram LightProgram("LightVertexShader.vs", "LightFragmentShader.fs");
 
 
 
@@ -238,19 +241,19 @@ int main()
         CubeProgram.Use();
         glm::vec3 CubeColor { glm::vec3(1.0f, 0.9f, 0.1f) };
         glm::vec3 LightColor { glm::vec3(1.0f, 1.0f, 1.0f) };
-        FragmentShader.setVec3(CubeProgram.ID, "CubeColor", CubeColor);
-        FragmentShader.setVec3(CubeProgram.ID, "lightColor", LightColor);
-        FragmentShader.setVec3(CubeProgram.ID, "lightPos", lightPos);
-		FragmentShader.setVec3(CubeProgram.ID, "viewPos", MainCamera.m_Position);
+        CubeProgram.setVec3(CubeProgram.ID, "CubeColor", CubeColor);
+        CubeProgram.setVec3(CubeProgram.ID, "lightColor", LightColor);
+        CubeProgram.setVec3(CubeProgram.ID, "lightPos", lightPos);
+		CubeProgram.setVec3(CubeProgram.ID, "viewPos", MainCamera.m_Position);
         // FragmentShader.setFloat(Program.ID, "T_Percent", mixValue);
         glm::vec3 ambient   { (1.0f, 0.5f, 0.31f) };
         glm::vec3 diffuse   { (1.0f, 0.5f, 0.31f) };
         glm::vec3 specular  { (0.5f, 0.5f, 0.50f) };
         float shininess     { 32.0f };
-        FragmentShader.setVec3 (CubeProgram.ID, "material.ambient", ambient);
-        FragmentShader.setVec3 (CubeProgram.ID, "material.diffuse", diffuse);
-        FragmentShader.setVec3 (CubeProgram.ID, "material.specular", specular);
-        FragmentShader.setFloat(CubeProgram.ID, "material.shininess", shininess);
+        CubeProgram.setVec3 (CubeProgram.ID, "material.ambient", ambient);
+        CubeProgram.setVec3 (CubeProgram.ID, "material.diffuse", diffuse);
+        CubeProgram.setVec3 (CubeProgram.ID, "material.specular", specular);
+        CubeProgram.setFloat(CubeProgram.ID, "material.shininess", shininess);
 
 
         // LightColor.x = static_cast<float>(sin(glfwGetTime() * 2.0f));
@@ -279,8 +282,8 @@ int main()
         projection = glm::perspective(glm::radians(MainCamera.m_Zoom), (float)WINDOW_DEFAULT_WIDTH / (float)WINDOW_DEFAULT_HEIGHT, 0.1f, 100.0f);
         view = MainCamera.viewMatrix();
         
-        VertexShader.setMat4(CubeProgram.ID, "view", view);
-        VertexShader.setMat4(CubeProgram.ID, "projection", projection);
+        CubeProgram.setMat4(CubeProgram.ID, "view", view);
+        CubeProgram.setMat4(CubeProgram.ID, "projection", projection);
 
 
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // For wireframe
@@ -292,7 +295,7 @@ int main()
         glBindVertexArray(VAO);
 
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-        VertexShader.setMat4(CubeProgram.ID, "model", model);
+        CubeProgram.setMat4(CubeProgram.ID, "model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         /*
@@ -318,9 +321,9 @@ int main()
         model = glm::scale(model, glm::vec3(0.2f));
 
         LightProgram.Use();
-        LightVertexShader.setMat4(LightProgram.ID, "view", view);
-        LightVertexShader.setMat4(LightProgram.ID, "projection", projection);
-        LightVertexShader.setMat4(LightProgram.ID, "model", model);
+        LightProgram.setMat4(LightProgram.ID, "view", view);
+        LightProgram.setMat4(LightProgram.ID, "projection", projection);
+        LightProgram.setMat4(LightProgram.ID, "model", model);
 
         
         

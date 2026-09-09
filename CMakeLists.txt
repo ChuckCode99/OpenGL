@@ -18,7 +18,6 @@ find_package(OpenGL REQUIRED)
 set(SRC_FILES
     Source.c++
     Camera.c++
-    Shader.c++
     ShaderProgram.c++
     glad.c++)
 

@@ -115,9 +115,9 @@ void Application::run()
         CubeProgram.setVec3(CubeProgram.ID, "lightPos", m_LightPos);
         CubeProgram.setVec3(CubeProgram.ID, "viewPos", m_Camera.m_Position);
         // FragmentShader.setFloat(Program.ID, "T_Percent", mixValue);
-        glm::vec3 ambient   { (1.0f, 0.5f, 0.31f) };
-        glm::vec3 diffuse   { (1.0f, 0.5f, 0.31f) };
-        glm::vec3 specular  { (0.5f, 0.5f, 0.50f) };
+        glm::vec3 ambient   { 1.0f, 0.5f, 0.31f };
+        glm::vec3 diffuse   { 1.0f, 0.5f, 0.31f };
+        glm::vec3 specular  { 0.5f, 0.5f, 0.50f };
         float shininess     { 32.0f };
         CubeProgram.setVec3 (CubeProgram.ID, "material.ambient", ambient);
         CubeProgram.setVec3 (CubeProgram.ID, "material.diffuse", diffuse);
@@ -130,9 +130,9 @@ void Application::run()
         // LightColor.z = static_cast<float>(sin(glfwGetTime() * 1.3f));
         glm::vec3 diffuseColor = LightColor * glm::vec3(0.5f);
         glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
-        glm::vec3 light_ambient  { (1.0f, 0.5f, 0.31f) };
-        glm::vec3 light_diffuse  { (1.0f, 0.5f, 0.31f) };
-        glm::vec3 light_specular { (1.0f, 1.0f, 1.00f) };
+        glm::vec3 light_ambient  { 1.0f, 0.5f, 0.31f };
+        glm::vec3 light_diffuse  { 1.0f, 0.5f, 0.31f };
+        glm::vec3 light_specular { 1.0f, 1.0f, 1.00f };
 
         glUniform3fv(glGetUniformLocation(CubeProgram.ID, "light.position"), 1, glm::value_ptr(m_LightPos));
         glUniform3fv(glGetUniformLocation(CubeProgram.ID, "light.ambient"), 1, glm::value_ptr(ambientColor));

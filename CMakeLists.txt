@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 4.3.2)
 project(OpenGL VERSION 1.0.0 LANGUAGES C CXX)
 
+project(LearningOpenGL)
+# Force CMake to compile with C++20 flags for all targets
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF) # Disables GNU extensions to keep code standard
 
 # Disable building GLFW documentation and examples to speed up compile times
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
